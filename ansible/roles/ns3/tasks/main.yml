@@ -1,0 +1,30 @@
+---
+- name: Install ns-3 (patched, from git)
+  become: true
+  become_user: ns3
+  git:
+    repo: 'https://github.com/yanosz/ns-3-patched'
+    dest: /home/ns3/ns-3.29
+    update: yes
+
+- name: Waf configure
+  become: true
+  become_user: ns3
+  command: /home/ns3/ns-3.29/waf configure
+  args:
+    chdir: /home/ns3/ns-3.29/
+
+- name: Create run.sh in /home/ns3/ns-3.29/
+  template:
+    src: templates/run.sh.j2
+    dest: /home/ns3/run.sh
+    owner: ns3
+    group: ns3
+    mode: '0755'
+
+- name: Start ns3 in tmux
+  become: true
+  become_user: ns3
+  command:  screen -d -m /home/ns3/run.sh
+  args:
+    chdir: /home/ns3/ns-3.29/

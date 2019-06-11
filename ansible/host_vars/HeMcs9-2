@@ -1,0 +1,3 @@
+ns3_staNum: "128 256"
+ns3_wifMode: "HeMcs9"
+ns_3_run: "5 15"

@@ -1,0 +1,5 @@
+---
+- hosts: servers
+  roles:
+    - packages
+    - ns3

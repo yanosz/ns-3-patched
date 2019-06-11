@@ -1,0 +1,30 @@
+- name: install common packages
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+  - tmux
+  - build-essential
+  - wget
+  - sudo
+  - screen
+  - git
+
+- name: Remove user ns3-
+  user:
+    name: ns3
+    shell: /bin/bash
+    state: absent
+    remove: true
+
+- name: Create user ns3
+  user:
+    name: ns3
+    shell: /bin/bash
+    state: present
+
+#- name: Install ns-3
+#  become: true
+#  become_user: ns3
+#  unarchive:
+#    src: https://jluehr.de/ns-3.29.tar.bz2
+#    dest: /home/ns3
+#    remote_src: yes

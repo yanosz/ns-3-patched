@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for run in `seq {{ns_3_run}}`; do
+	for staNum in {{ns3_staNum}}; do
+		for mode in {{ns3_wifMode}}; do
+			/home/ns3/ns-3.29/waf --run "expose --run=$run --wifiMode=$mode --staNum=$staNum" 
+		done
+	done
+done
