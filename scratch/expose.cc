@@ -121,7 +121,6 @@ void RoutingExperiment::CheckThroughput() {
 	}
 
 	out.close();
-
 	Simulator::Schedule(Seconds(1.0), &RoutingExperiment::CheckThroughput,
 			this);
 }
@@ -418,7 +417,7 @@ void RoutingExperiment::Run() {
 
 	// Config::Connect ("/NodeList/*/DeviceList/*/Phy/State/State", MakeCallback(&PhyStateTrace));
 
-	Simulator::Stop(Seconds(TotalTime));
+	Simulator::Stop(Seconds(TotalTime+1));
 	Simulator::Run();
 
 	Simulator::Destroy();
