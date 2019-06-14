@@ -153,6 +153,7 @@ void RoutingExperiment::CommandSetup(int argc, char **argv) {
 		phy.standard =  WIFI_PHY_STANDARD_80211a;
 		phy.minstrel = true;
 		phy.name = "minstrel";
+		phy.mbps = 1;
 	} else {
 		phy.wifiMode = WifiMode(mode);
 		phy.mbps = phy.wifiMode.GetDataRate(20) / 1000000;
@@ -248,6 +249,7 @@ void RoutingExperiment::Run() {
 	wifiPhy.Set("TxPowerLevels", UintegerValue(1));
 	wifiPhy.Set("TxGain", DoubleValue(4));
 	wifiPhy.Set("RxGain", DoubleValue(4));
+	wifiPhy.Set ("ChannelNumber", UintegerValue (104));
 	//wifiPhy.Set("RxNoiseFigure", DoubleValue(10));
 	//wifiPhy.Set("CcaMode1Threshold", DoubleValue(-79));
 	// wifiPhy.Set("YansErrorRateModel", DoubleValue(-79 + 3));
@@ -295,7 +297,7 @@ void RoutingExperiment::Run() {
 
 	/* Configure STA */
 	if(unicast) {
-		wifiMac.SetType("ns3::StaWifiMac", "Ssid", SsidValue(ssid));
+		wifiMac.SetType("ns3::StaWifiMac", "Ssid", SsidValue(ssid), "ActiveProbing", BooleanValue (true));
 	}
 
 	NetDeviceContainer staNetDeviceContainer;
@@ -412,8 +414,8 @@ void RoutingExperiment::Run() {
 	NS_LOG_INFO("Run Simulation.");
 
 	CheckThroughput();
-	wifiPhy.EnablePcapAll("wifi",true);
-	Packet::EnablePrinting ();
+	// wifiPhy.EnablePcapAll("wifi",true);
+	// Packet::EnablePrinting ();
 
 	// Config::Connect ("/NodeList/*/DeviceList/*/Phy/State/State", MakeCallback(&PhyStateTrace));
 
